@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Run JS</title>
+</head>
+<body>
+<h1>Hello World!</h1>
+<script src="q1_deepCopy.js"></script>
+<script src="q2_check.js"></script>
+<script>
+  // Test functions in browser
+  console.log('Functions loaded successfully!');
+
+  // Test deepCopy
+  const original = { a: 1, b: { c: 2 } };
+  const copy = deepCopy(original);
+  console.log('Original:', original);
+  console.log('Deep copy:', copy);
+  console.log('Are they different objects?', original !== copy);
+  console.log('Are nested objects different?', original.b !== copy.b);
+
+  // Test check function
+  const data1 = { a: 17, b: { c: 'Test', d: null } };
+  const data2 = { a: 17, b: { c: 'Test' } };
+  const data3 = { a: 17, b: null };
+  console.log('check(data1, data2):', check(data1, data2)); // should be true
+  console.log('check(data1, data3):', check(data1, data3)); // should be false
+  console.log('check({}, []):', check({}, [])); // should be false
+</script>
+</body>
+</html>
