@@ -63,11 +63,9 @@ export class CustomSortPipe implements PipeTransform {
       return a.length - b.length;
     }
 
-    // Handle objects (simple comparison using JSON.stringify)
-    if (typeof a === 'object' && typeof b === 'object') {
-      const aStr = JSON.stringify(a);
-      const bStr = JSON.stringify(b);
-      return aStr.localeCompare(bStr);
+    // ignore other object types
+    if (typeof a === 'object' || typeof b === 'object') {
+      return 0;
     }
 
     // Handle numbers
