@@ -42,6 +42,33 @@
         .demo-result { background: #f8f9fa; border-left: 4px solid #007bff; padding: 15px; margin: 10px 0; font-family: monospace; }
         .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 10px 0; }
         .comparison-item { background: #f8f9fa; border: 1px solid #dee2e6; padding: 10px; border-radius: 5px; }
+        .section-header {
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .section-header:hover {
+            background: #f8f9fa;
+            margin: -10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .toggle-icon {
+            font-size: 18px;
+            transition: transform 0.2s;
+        }
+        .toggle-icon.collapsed {
+            transform: rotate(-90deg);
+        }
+        .section-content {
+            transition: all 0.3s ease-out;
+            overflow: hidden;
+        }
+        .section-content.collapsed {
+            display: none;
+        }
         @media (max-width: 900px) {
             body { grid-template-columns: 1fr; }
             .info-panel { position: static; }
@@ -53,66 +80,76 @@
     <div class="main-content">
         <h1>JavaScript Exercise - Interactive Demo</h1>
 
-        <div class="browser-info">
-            <strong>🌐 Browser:</strong> <span id="browser-info">Detecting...</span><br>
-            <strong>🔧 Debug Method:</strong> <span id="debug-method">Initializing...</span>
-        </div>
-
         <!-- Q1: Deep Copy Section -->
         <div class="section">
-            <h2>🔄 Q1: Deep Copy Function</h2>
-            <div class="instructions">
-                <strong>Deep copy creates completely independent copies of objects, including nested objects and arrays.</strong>
-                <br>Test various scenarios to see how deepCopy handles different data types.
+            <div class="section-header" onclick="toggleSection('q1')">
+                <h2>🔄 Q1: Deep Copy Function</h2>
+                <span class="toggle-icon collapsed" id="q1-icon">▶</span>
             </div>
+            <div class="section-content collapsed" id="q1-content">
+                <div class="instructions">
+                    <strong>Deep copy creates completely independent copies of objects, including nested objects and arrays.</strong>
+                    <br>Test various scenarios to see how deepCopy handles different data types.
+                </div>
 
-            <div class="button-group">
-                <button class="primary-btn" onclick="demoBasicDeepCopy()">📦 Basic Objects</button>
-                <button class="primary-btn" onclick="demoNestedDeepCopy()">🏗️ Nested Objects</button>
-                <button class="primary-btn" onclick="demoArrayDeepCopy()">📋 Arrays</button>
-                <button class="success-btn" onclick="demoDateDeepCopy()">📅 Dates</button>
-                <button class="warning-btn" onclick="demoCyclicDeepCopy()">🔄 Cyclic References</button>
+                <div class="button-group">
+                    <button class="primary-btn" onclick="demoBasicDeepCopy()">📦 Basic Objects</button>
+                    <button class="primary-btn" onclick="demoNestedDeepCopy()">🏗️ Nested Objects</button>
+                    <button class="primary-btn" onclick="demoArrayDeepCopy()">📋 Arrays</button>
+                    <button class="success-btn" onclick="demoDateDeepCopy()">📅 Dates</button>
+                    <button class="warning-btn" onclick="demoCyclicDeepCopy()">🔄 Cyclic References</button>
+                </div>
+
+                <div id="deepcopy-output"></div>
             </div>
-
-            <div id="deepcopy-output"></div>
         </div>
 
         <!-- Q2: Check Function Section -->
         <div class="section">
-            <h2>⚖️ Q2: Object Equivalency Check</h2>
-            <div class="instructions">
-                <strong>Check function compares objects for deep equality with special rules (null == undefined).</strong>
-                <br>Compare different objects and see how the function handles various edge cases.
+            <div class="section-header" onclick="toggleSection('q2')">
+                <h2>⚖️ Q2: Object Equivalency Check</h2>
+                <span class="toggle-icon collapsed" id="q2-icon">▶</span>
             </div>
+            <div class="section-content collapsed" id="q2-content">
+                <div class="instructions">
+                    <strong>Check function compares objects for deep equality with special rules (null == undefined).</strong>
+                    <br>Compare different objects and see how the function handles various edge cases.
+                </div>
 
-            <div class="button-group">
-                <button class="primary-btn" onclick="demoBasicCheck()">🔍 Basic Comparison</button>
-                <button class="primary-btn" onclick="demoNestedCheck()">🏗️ Nested Objects</button>
-                <button class="success-btn" onclick="demoSpecialRules()">⚡ Special Rules</button>
-                <button class="warning-btn" onclick="demoEdgeCases()">🎯 Edge Cases</button>
-                <button class="secondary-btn" onclick="demoArrayCheck()">📋 Array Comparison</button>
+                <div class="button-group">
+                    <button class="primary-btn" onclick="demoBasicCheck()">🔍 Basic Comparison</button>
+                    <button class="primary-btn" onclick="demoNestedCheck()">🏗️ Nested Objects</button>
+                    <button class="success-btn" onclick="demoSpecialRules()">⚡ Special Rules</button>
+                    <button class="warning-btn" onclick="demoEdgeCases()">🎯 Edge Cases</button>
+                    <button class="secondary-btn" onclick="demoArrayCheck()">📋 Array Comparison</button>
+                </div>
+
+                <div id="check-output"></div>
             </div>
-
-            <div id="check-output"></div>
         </div>
 
         <!-- Q3: Execute Function Section -->
         <div class="section">
-            <h2>⚡ Q3: Dynamic Code Execution</h2>
-            <div class="instructions">
-                <strong>Execute function runs JavaScript code strings with injected variables and debugging support.</strong>
-                <br>Open DevTools (F12) → Sources/Debugger tab to see dynamic code debugging in action.
+            <div class="section-header" onclick="toggleSection('q3')">
+                <h2>⚡ Q3: Dynamic Code Execution</h2>
+                <span class="toggle-icon collapsed" id="q3-icon">▶</span>
             </div>
+            <div class="section-content collapsed" id="q3-content">
+                <div class="instructions">
+                    <strong>Execute function runs JavaScript code strings with injected variables and debugging support.</strong>
+                    <br>Open DevTools (F12) → Sources/Debugger tab to see dynamic code debugging in action.
+                </div>
 
-            <div class="button-group">
-                <button class="primary-btn" onclick="runSimpleCode()">🟢 Simple Code</button>
-                <button class="primary-btn" onclick="runComplexCode()">🔵 Complex Code</button>
-                <button class="secondary-btn" onclick="runMathDemo()">🔢 Math Operations</button>
-                <button class="success-btn" onclick="runDebuggerDemo()">🐛 Debugger Demo</button>
-                <button class="warning-btn" onclick="runErrorCode()">🔴 Error Demo</button>
+                <div class="button-group">
+                    <button class="primary-btn" onclick="runSimpleCode()">🟢 Simple Code</button>
+                    <button class="primary-btn" onclick="runComplexCode()">🔵 Complex Code</button>
+                    <button class="secondary-btn" onclick="runMathDemo()">🔢 Math Operations</button>
+                    <button class="success-btn" onclick="runDebuggerDemo()">🐛 Debugger Demo</button>
+                    <button class="warning-btn" onclick="runErrorCode()">🔴 Error Demo</button>
+                </div>
+
+                <div id="execute-output"></div>
             </div>
-
-            <div id="execute-output"></div>
         </div>
 
         <div id="output"></div>
@@ -135,7 +172,7 @@
                 <li>Q1: Deep copy with cyclic handling</li>
                 <li>Q2: Deep equality with special rules</li>
                 <li>Q3: Dynamic code with debugging</li>
-                <li>Universal browser support</li>
+                <li>Toggleable sections</li>
                 <li>Interactive visual demos</li>
             </ul>
         </div>
@@ -147,35 +184,22 @@
     <script src="q2_check.js"></script>
     <script src="q3_execute.js"></script>
     <script>
-        // Browser detection
-        const browserInfo = { name: 'Unknown', supportsSourceURL: false, debugTab: 'Console' };
-
-        function detectBrowser() {
-            const ua = navigator.userAgent;
-            if (ua.includes('Chrome') && !ua.includes('Edg')) {
-                browserInfo.name = 'Chrome';
-                browserInfo.supportsSourceURL = true;
-                browserInfo.debugTab = 'Sources';
-            } else if (ua.includes('Firefox')) {
-                browserInfo.name = 'Firefox';
-                browserInfo.supportsSourceURL = 'limited';
-                browserInfo.debugTab = 'Debugger';
-            } else if (ua.includes('Safari') && !ua.includes('Chrome')) {
-                browserInfo.name = 'Safari';
-                browserInfo.supportsSourceURL = true;
-                browserInfo.debugTab = 'Sources';
-            } else if (ua.includes('Edg')) {
-                browserInfo.name = 'Edge';
-                browserInfo.supportsSourceURL = true;
-                browserInfo.debugTab = 'Sources';
-            }
-
-            document.getElementById('browser-info').textContent = browserInfo.name;
-            document.getElementById('debug-method').textContent =
-                browserInfo.supportsSourceURL ? 'SourceURL + Console + Debugger' : 'Enhanced Console + Stack Traces';
-        }
-
         let executionCounter = 0;
+
+        function toggleSection(sectionId) {
+            const content = document.getElementById(sectionId + '-content');
+            const icon = document.getElementById(sectionId + '-icon');
+
+            if (content.classList.contains('collapsed')) {
+                content.classList.remove('collapsed');
+                icon.classList.remove('collapsed');
+                icon.textContent = '▼';
+            } else {
+                content.classList.add('collapsed');
+                icon.classList.add('collapsed');
+                icon.textContent = '▶';
+            }
+        }
 
         function updateInfo(title, description, code = '') {
             document.getElementById('execution-info').innerHTML = `<strong>${title}</strong><br>${description}`;
@@ -533,7 +557,7 @@
             logToSection('check-output', html);
         }
 
-        // Q3: Execute Function Demos (enhanced from original)
+        // Q3: Execute Function Demos
         function universalExecute(code, variables = {}, sourceName = 'executed-snippet', description = 'Dynamic code execution') {
             executionCounter++;
             const executionId = `${sourceName}-${executionCounter}`;
@@ -630,7 +654,6 @@
         }
 
         // Initialize
-        detectBrowser();
         console.log('🚀 JS Exercise Interactive Demo Loaded!');
         console.log('Features: Deep Copy, Object Comparison, Dynamic Execution');
 
@@ -640,7 +663,7 @@
         const testCopy = deepCopy(testOriginal);
         console.log('✅ deepCopy test passed:', testOriginal !== testCopy && testOriginal.b !== testCopy.b);
         console.log('✅ check test passed:', check({ a: 1 }, { a: 1 }) === true);
-        console.log('✅ execute function loaded and ready');
+        console.log('✅ execute function loaded and ready to fire.');
     </script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 /**
  * Returns true if the input is a valid Date object
- * @param {*} date - The date to check
+ * @param date - The date to check
  * @returns {boolean} - True if valid Date object, false otherwise
  */
 function isValidDate(date) {
@@ -84,8 +84,8 @@ function deepCopy(obj) {
 }
 
 /**
- * Deliberately exposing only the 'deepCopy' function to contain the scope of the exercise sane :D
- * I would have written more tests if I was being paid for this :P
+ * Only exposing deepCopy only to keep the exercise scope contained.
+ * Could write more tests but this isn't a side project :P
  */
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) {

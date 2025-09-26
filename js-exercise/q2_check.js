@@ -1,6 +1,9 @@
 /**
  * Returns true if the input is a valid Date object
- * @param {*} date - The date to check
+ * @param date - The date to check
+ *
+ * Note: This function is duplicated here from q1_deepCopy.js to keep the scope of the exercise contained.
+ * In a real-world scenario, I would have put this in a separate utility file
  * @returns {boolean} - True if valid Date object, false otherwise
  */
 function isValidDate(date) {
@@ -40,10 +43,10 @@ function check(a, b) {
   // Special rule: null == undefined
   if ((a === undefined && b === null) || (a == null && b === undefined)) return true;
 
-  // handle case where one is null/undefined and the other isn't
+  // handle case where one is null and the other isn't
   if ((a === null || b === null) && (a !== b)) return false;
 
-  // handle Type mismatch, this will also help down the line to avoid unnecessary checks
+  // handle type mismatch, this will also help down the line to avoid unnecessary checks
   if (typeof a !== typeof b) return false;
 
   // handle Primitives
@@ -89,7 +92,7 @@ function check(a, b) {
 
 /**
  * Deliberately exposing only the 'check' function to contain the scope of the exercise sane :D
- * Want more tests? SHOW ME THE MONEY :P
+ * Could write more tests but, SHOW ME THE MONEY :P
  */
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) {

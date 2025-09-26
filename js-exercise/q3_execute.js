@@ -10,9 +10,9 @@ function execute(code, variables = {}) {
     sum: (x, y) => x + y,
     mul: (x, y) => x * y,
   });
-  const $logger = console.log.bind(console); // keep console as `this`
+  const $logger = console.log.bind(console); // attach console context
 
-  // Filter out any user variables that would shadow globals
+  // filter out any user variables that would mess with the required global methods i.e. $math, $logger
   const filteredVariables = { ...variables };
   delete filteredVariables.$math;
   delete filteredVariables.$logger;
@@ -29,7 +29,7 @@ function execute(code, variables = {}) {
 
 /**
  * Deliberately exposing only the 'execute' function to match the exercise style.
- * Time is money my friends, want more tests? well, you know the drill :P
+ * Could write more tests but time is money my friends :P
  */
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) {
