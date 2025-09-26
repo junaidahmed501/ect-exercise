@@ -1,4 +1,8 @@
-// Returns true if the input is a valid Date object
+/**
+ * Returns true if the input is a valid Date object
+ * @param {*} date - The date to check
+ * @returns {boolean} - True if valid Date object, false otherwise
+ */
 function isValidDate(date) {
   return date && Object.prototype.toString.call(date) === "[object Date]" && !isNaN(date);
 }
@@ -79,15 +83,17 @@ function deepCopy(obj) {
   return _deepCopy(obj);
 }
 
-// UMD pattern - works in both Node.js and browser
+/**
+ * Deliberately exposing only the 'deepCopy' function to contain the scope of the exercise sane :D
+ * I would have written more tests if I was being paid for this :P
+ */
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) {
-    // Node.js
     module.exports = factory();
   } else {
-    // Browser globals
-    root.deepCopy = factory().deepCopy;
+    const exported = factory();
+    root.deepCopy = exported.deepCopy;
   }
 }(typeof self !== 'undefined' ? self : this, function () {
-  return { deepCopy: deepCopy };
+  return { deepCopy };
 }));

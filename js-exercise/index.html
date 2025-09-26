@@ -1,32 +1,646 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Run JS</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Exercise - Interactive Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 20px;
+        }
+        .main-content { }
+        .info-panel {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        button { margin: 10px 5px; padding: 10px 20px; font-size: 16px; border-radius: 5px; }
+        .primary-btn { background: #007bff; color: white; border: none; }
+        .secondary-btn { background: #6c757d; color: white; border: none; }
+        .success-btn { background: #28a745; color: white; border: none; }
+        .warning-btn { background: #ffc107; color: black; border: none; }
+        .clear-btn { background: #dc3545; color: white; border: none; margin-top: 10px; }
+        #output { margin-top: 20px; padding: 10px; background: #f5f5f5; border-radius: 5px; }
+        .instructions { background: #e3f2fd; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .error { color: red; font-weight: bold; }
+        .success { color: green; font-weight: bold; }
+        .warning { color: orange; font-weight: bold; }
+        .browser-info { background: #fff3cd; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .code-display { background: #f8f9fa; border: 1px solid #dee2e6; padding: 15px; margin: 10px 0; font-family: monospace; white-space: pre-wrap; border-radius: 5px; max-height: 300px; overflow-y: auto; }
+        .info-section { margin-bottom: 15px; }
+        .info-title { font-weight: bold; margin-bottom: 8px; color: #495057; }
+        .section { background: #ffffff; border: 1px solid #dee2e6; border-radius: 8px; padding: 20px; margin: 20px 0; }
+        .section h2 { color: #495057; border-bottom: 2px solid #007bff; padding-bottom: 10px; }
+        .demo-result { background: #f8f9fa; border-left: 4px solid #007bff; padding: 15px; margin: 10px 0; font-family: monospace; }
+        .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 10px 0; }
+        .comparison-item { background: #f8f9fa; border: 1px solid #dee2e6; padding: 10px; border-radius: 5px; }
+        @media (max-width: 900px) {
+            body { grid-template-columns: 1fr; }
+            .info-panel { position: static; }
+            .comparison { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
-<h1>Hello World!</h1>
-<script src="q1_deepCopy.js"></script>
-<script src="q2_check.js"></script>
-<script>
-  // Test functions in browser
-  console.log('Functions loaded successfully!');
+    <div class="main-content">
+        <h1>JavaScript Exercise - Interactive Demo</h1>
 
-  // Test deepCopy
-  const original = { a: 1, b: { c: 2 } };
-  const copy = deepCopy(original);
-  console.log('Original:', original);
-  console.log('Deep copy:', copy);
-  console.log('Are they different objects?', original !== copy);
-  console.log('Are nested objects different?', original.b !== copy.b);
+        <div class="browser-info">
+            <strong>🌐 Browser:</strong> <span id="browser-info">Detecting...</span><br>
+            <strong>🔧 Debug Method:</strong> <span id="debug-method">Initializing...</span>
+        </div>
 
-  // Test check function
-  const data1 = { a: 17, b: { c: 'Test', d: null } };
-  const data2 = { a: 17, b: { c: 'Test' } };
-  const data3 = { a: 17, b: null };
-  console.log('check(data1, data2):', check(data1, data2)); // should be true
-  console.log('check(data1, data3):', check(data1, data3)); // should be false
-  console.log('check({}, []):', check({}, [])); // should be false
-</script>
+        <!-- Q1: Deep Copy Section -->
+        <div class="section">
+            <h2>🔄 Q1: Deep Copy Function</h2>
+            <div class="instructions">
+                <strong>Deep copy creates completely independent copies of objects, including nested objects and arrays.</strong>
+                <br>Test various scenarios to see how deepCopy handles different data types.
+            </div>
+
+            <div class="button-group">
+                <button class="primary-btn" onclick="demoBasicDeepCopy()">📦 Basic Objects</button>
+                <button class="primary-btn" onclick="demoNestedDeepCopy()">🏗️ Nested Objects</button>
+                <button class="primary-btn" onclick="demoArrayDeepCopy()">📋 Arrays</button>
+                <button class="success-btn" onclick="demoDateDeepCopy()">📅 Dates</button>
+                <button class="warning-btn" onclick="demoCyclicDeepCopy()">🔄 Cyclic References</button>
+            </div>
+
+            <div id="deepcopy-output"></div>
+        </div>
+
+        <!-- Q2: Check Function Section -->
+        <div class="section">
+            <h2>⚖️ Q2: Object Equivalency Check</h2>
+            <div class="instructions">
+                <strong>Check function compares objects for deep equality with special rules (null == undefined).</strong>
+                <br>Compare different objects and see how the function handles various edge cases.
+            </div>
+
+            <div class="button-group">
+                <button class="primary-btn" onclick="demoBasicCheck()">🔍 Basic Comparison</button>
+                <button class="primary-btn" onclick="demoNestedCheck()">🏗️ Nested Objects</button>
+                <button class="success-btn" onclick="demoSpecialRules()">⚡ Special Rules</button>
+                <button class="warning-btn" onclick="demoEdgeCases()">🎯 Edge Cases</button>
+                <button class="secondary-btn" onclick="demoArrayCheck()">📋 Array Comparison</button>
+            </div>
+
+            <div id="check-output"></div>
+        </div>
+
+        <!-- Q3: Execute Function Section -->
+        <div class="section">
+            <h2>⚡ Q3: Dynamic Code Execution</h2>
+            <div class="instructions">
+                <strong>Execute function runs JavaScript code strings with injected variables and debugging support.</strong>
+                <br>Open DevTools (F12) → Sources/Debugger tab to see dynamic code debugging in action.
+            </div>
+
+            <div class="button-group">
+                <button class="primary-btn" onclick="runSimpleCode()">🟢 Simple Code</button>
+                <button class="primary-btn" onclick="runComplexCode()">🔵 Complex Code</button>
+                <button class="secondary-btn" onclick="runMathDemo()">🔢 Math Operations</button>
+                <button class="success-btn" onclick="runDebuggerDemo()">🐛 Debugger Demo</button>
+                <button class="warning-btn" onclick="runErrorCode()">🔴 Error Demo</button>
+            </div>
+
+            <div id="execute-output"></div>
+        </div>
+
+        <div id="output"></div>
+    </div>
+
+    <div class="info-panel">
+        <div class="info-section">
+            <div class="info-title">📝 Current Demo</div>
+            <div id="execution-info">Select a demo to begin</div>
+        </div>
+
+        <div class="info-section">
+            <div class="info-title">💻 Code Preview</div>
+            <div id="code-preview">Click a button to see code</div>
+        </div>
+
+        <div class="info-section">
+            <div class="info-title">🔧 Features</div>
+            <ul style="font-size: 12px; margin: 0; padding-left: 20px;">
+                <li>Q1: Deep copy with cyclic handling</li>
+                <li>Q2: Deep equality with special rules</li>
+                <li>Q3: Dynamic code with debugging</li>
+                <li>Universal browser support</li>
+                <li>Interactive visual demos</li>
+            </ul>
+        </div>
+
+        <button class="clear-btn" onclick="clearAll()">🗑️ Clear All</button>
+    </div>
+
+    <script src="q1_deepCopy.js"></script>
+    <script src="q2_check.js"></script>
+    <script src="q3_execute.js"></script>
+    <script>
+        // Browser detection
+        const browserInfo = { name: 'Unknown', supportsSourceURL: false, debugTab: 'Console' };
+
+        function detectBrowser() {
+            const ua = navigator.userAgent;
+            if (ua.includes('Chrome') && !ua.includes('Edg')) {
+                browserInfo.name = 'Chrome';
+                browserInfo.supportsSourceURL = true;
+                browserInfo.debugTab = 'Sources';
+            } else if (ua.includes('Firefox')) {
+                browserInfo.name = 'Firefox';
+                browserInfo.supportsSourceURL = 'limited';
+                browserInfo.debugTab = 'Debugger';
+            } else if (ua.includes('Safari') && !ua.includes('Chrome')) {
+                browserInfo.name = 'Safari';
+                browserInfo.supportsSourceURL = true;
+                browserInfo.debugTab = 'Sources';
+            } else if (ua.includes('Edg')) {
+                browserInfo.name = 'Edge';
+                browserInfo.supportsSourceURL = true;
+                browserInfo.debugTab = 'Sources';
+            }
+
+            document.getElementById('browser-info').textContent = browserInfo.name;
+            document.getElementById('debug-method').textContent =
+                browserInfo.supportsSourceURL ? 'SourceURL + Console + Debugger' : 'Enhanced Console + Stack Traces';
+        }
+
+        let executionCounter = 0;
+
+        function updateInfo(title, description, code = '') {
+            document.getElementById('execution-info').innerHTML = `<strong>${title}</strong><br>${description}`;
+            if (code) {
+                document.getElementById('code-preview').innerHTML = `<div class="code-display">${code}</div>`;
+            }
+        }
+
+        function logToSection(sectionId, message) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.innerHTML += '<div>' + message + '</div>';
+            }
+        }
+
+        function clearSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) section.innerHTML = '';
+        }
+
+        function clearAll() {
+            ['deepcopy-output', 'check-output', 'execute-output', 'output'].forEach(clearSection);
+            document.getElementById('execution-info').textContent = 'All cleared';
+            document.getElementById('code-preview').textContent = 'Click a button to see code';
+        }
+
+        // Q1: Deep Copy Demos
+        function demoBasicDeepCopy() {
+            updateInfo('Q1: Basic Deep Copy', 'Copying simple objects and primitives');
+            clearSection('deepcopy-output');
+
+            const original = { name: 'John', age: 30, active: true };
+            const copied = deepCopy(original);
+
+            // Modify copy to show independence
+            copied.name = 'Jane';
+            copied.age = 25;
+
+            const html = `
+                <div class="comparison">
+                    <div class="comparison-item">
+                        <strong>Original:</strong><br>
+                        ${JSON.stringify(original, null, 2)}
+                    </div>
+                    <div class="comparison-item">
+                        <strong>Deep Copy (modified):</strong><br>
+                        ${JSON.stringify(copied, null, 2)}
+                    </div>
+                </div>
+                <div class="demo-result">
+                    ✅ Objects are independent: ${original !== copied}<br>
+                    ✅ Original unchanged: ${original.name === 'John'}<br>
+                    ✅ Copy was modified: ${copied.name === 'Jane'}
+                </div>
+            `;
+            logToSection('deepcopy-output', html);
+        }
+
+        function demoNestedDeepCopy() {
+            updateInfo('Q1: Nested Deep Copy', 'Testing deep copying of nested objects');
+            clearSection('deepcopy-output');
+
+            const original = {
+                user: { name: 'Alice', details: { age: 28, city: 'NYC' } },
+                preferences: { theme: 'dark', notifications: true }
+            };
+            const copied = deepCopy(original);
+
+            // Modify nested properties
+            copied.user.name = 'Bob';
+            copied.user.details.city = 'LA';
+
+            const html = `
+                <div class="comparison">
+                    <div class="comparison-item">
+                        <strong>Original:</strong><br>
+                        <pre>${JSON.stringify(original, null, 2)}</pre>
+                    </div>
+                    <div class="comparison-item">
+                        <strong>Deep Copy (nested modified):</strong><br>
+                        <pre>${JSON.stringify(copied, null, 2)}</pre>
+                    </div>
+                </div>
+                <div class="demo-result">
+                    ✅ Top level independent: ${original !== copied}<br>
+                    ✅ Nested objects independent: ${original.user !== copied.user}<br>
+                    ✅ Deep nested independent: ${original.user.details !== copied.user.details}<br>
+                    ✅ Original nested unchanged: ${original.user.name === 'Alice'}
+                </div>
+            `;
+            logToSection('deepcopy-output', html);
+        }
+
+        function demoArrayDeepCopy() {
+            updateInfo('Q1: Array Deep Copy', 'Deep copying arrays with nested objects');
+            clearSection('deepcopy-output');
+
+            const original = [
+                { id: 1, data: [1, 2, 3] },
+                { id: 2, data: [4, 5, 6] },
+                'simple string'
+            ];
+            const copied = deepCopy(original);
+
+            // Modify array and nested content
+            copied[0].id = 999;
+            copied[0].data.push(999);
+            copied.push('new item');
+
+            const html = `
+                <div class="comparison">
+                    <div class="comparison-item">
+                        <strong>Original Array:</strong><br>
+                        <pre>${JSON.stringify(original, null, 2)}</pre>
+                    </div>
+                    <div class="comparison-item">
+                        <strong>Copied Array (modified):</strong><br>
+                        <pre>${JSON.stringify(copied, null, 2)}</pre>
+                    </div>
+                </div>
+                <div class="demo-result">
+                    ✅ Arrays independent: ${original !== copied}<br>
+                    ✅ Nested objects independent: ${original[0] !== copied[0]}<br>
+                    ✅ Nested arrays independent: ${original[0].data !== copied[0].data}<br>
+                    ✅ Original lengths: ${original.length} vs ${copied.length}
+                </div>
+            `;
+            logToSection('deepcopy-output', html);
+        }
+
+        function demoDateDeepCopy() {
+            updateInfo('Q1: Date Deep Copy', 'Testing Date object deep copying');
+            clearSection('deepcopy-output');
+
+            const original = {
+                created: new Date('2024-01-15'),
+                updated: new Date(),
+                metadata: { timestamp: new Date('2023-12-01') }
+            };
+            const copied = deepCopy(original);
+
+            // Modify dates in copy
+            copied.created.setFullYear(2025);
+
+            const html = `
+                <div class="comparison">
+                    <div class="comparison-item">
+                        <strong>Original:</strong><br>
+                        Created: ${original.created.toISOString()}<br>
+                        Updated: ${original.updated.toISOString()}<br>
+                        Metadata: ${original.metadata.timestamp.toISOString()}
+                    </div>
+                    <div class="comparison-item">
+                        <strong>Copy (date modified):</strong><br>
+                        Created: ${copied.created.toISOString()}<br>
+                        Updated: ${copied.updated.toISOString()}<br>
+                        Metadata: ${copied.metadata.timestamp.toISOString()}
+                    </div>
+                </div>
+                <div class="demo-result">
+                    ✅ Date objects independent: ${original.created !== copied.created}<br>
+                    ✅ Original date unchanged: ${original.created.getFullYear() === 2024}<br>
+                    ✅ Copied date modified: ${copied.created.getFullYear() === 2025}<br>
+                    ✅ Nested dates independent: ${original.metadata.timestamp !== copied.metadata.timestamp}
+                </div>
+            `;
+            logToSection('deepcopy-output', html);
+        }
+
+        function demoCyclicDeepCopy() {
+            updateInfo('Q1: Cyclic Reference Handling', 'Testing circular reference handling');
+            clearSection('deepcopy-output');
+
+            const original = { name: 'parent' };
+            original.self = original; // Create cyclic reference
+            original.child = { parent: original }; // Another cycle
+
+            const copied = deepCopy(original);
+
+            const html = `
+                <div class="demo-result">
+                    <strong>🔄 Cyclic Reference Test:</strong><br>
+                    ✅ Copy completed without infinite loop<br>
+                    ✅ Objects independent: ${original !== copied}<br>
+                    ✅ Self-reference preserved: ${copied.self === copied}<br>
+                    ✅ Child reference preserved: ${copied.child.parent === copied}<br>
+                    ✅ Original self-reference intact: ${original.self === original}<br>
+                    <br>
+                    <strong>Structure:</strong><br>
+                    Original.name: "${original.name}"<br>
+                    Copy.name: "${copied.name}"<br>
+                    Self-references work: ${copied.self.name === copied.name}
+                </div>
+            `;
+            logToSection('deepcopy-output', html);
+        }
+
+        // Q2: Check Function Demos
+        function demoBasicCheck() {
+            updateInfo('Q2: Basic Object Comparison', 'Testing basic equality checks');
+            clearSection('check-output');
+
+            const tests = [
+                [{ a: 1, b: 2 }, { a: 1, b: 2 }],
+                [{ a: 1, b: 2 }, { b: 2, a: 1 }], // Order shouldn't matter
+                [{ a: 1 }, { a: 1, b: undefined }], // Missing vs undefined
+                [{ a: 1, b: 2 }, { a: 1, b: 3 }], // Different values
+                [{}, {}], // Empty objects
+                [[], []] // Empty arrays
+            ];
+
+            let html = '<div class="comparison">';
+            tests.forEach(([obj1, obj2], i) => {
+                const result = check(obj1, obj2);
+                const resultClass = result ? 'success' : 'error';
+                html += `
+                    <div class="comparison-item">
+                        <strong>Test ${i + 1}:</strong> <span class="${resultClass}">${result ? '✅ EQUAL' : '❌ NOT EQUAL'}</span><br>
+                        A: ${JSON.stringify(obj1)}<br>
+                        B: ${JSON.stringify(obj2)}
+                    </div>
+                `;
+            });
+            html += '</div>';
+
+            logToSection('check-output', html);
+        }
+
+        function demoNestedCheck() {
+            updateInfo('Q2: Nested Object Comparison', 'Testing deep nested equality');
+            clearSection('check-output');
+
+            const obj1 = { user: { profile: { name: 'Alice', settings: { theme: 'dark' } } } };
+            const obj2 = { user: { profile: { name: 'Alice', settings: { theme: 'dark' } } } };
+            const obj3 = { user: { profile: { name: 'Bob', settings: { theme: 'dark' } } } };
+
+            const result1 = check(obj1, obj2);
+            const result2 = check(obj1, obj3);
+
+            const html = `
+                <div class="comparison">
+                    <div class="comparison-item">
+                        <strong>Object 1:</strong><br>
+                        <pre>${JSON.stringify(obj1, null, 2)}</pre>
+                    </div>
+                    <div class="comparison-item">
+                        <strong>Object 2 (same):</strong><br>
+                        <pre>${JSON.stringify(obj2, null, 2)}</pre>
+                        <span class="success">Result: ${result1 ? '✅ EQUAL' : '❌ NOT EQUAL'}</span>
+                    </div>
+                </div>
+                <div class="comparison">
+                    <div class="comparison-item">
+                        <strong>Object 1:</strong><br>
+                        <pre>${JSON.stringify(obj1, null, 2)}</pre>
+                    </div>
+                    <div class="comparison-item">
+                        <strong>Object 3 (different name):</strong><br>
+                        <pre>${JSON.stringify(obj3, null, 2)}</pre>
+                        <span class="error">Result: ${result2 ? '✅ EQUAL' : '❌ NOT EQUAL'}</span>
+                    </div>
+                </div>
+            `;
+            logToSection('check-output', html);
+        }
+
+        function demoSpecialRules() {
+            updateInfo('Q2: Special Rules', 'null == undefined and other special cases');
+            clearSection('check-output');
+
+            const tests = [
+                [null, undefined, 'null == undefined (special rule)'],
+                [undefined, null, 'undefined == null (special rule)'],
+                [{ a: null }, { a: undefined }, 'null property == undefined property'],
+                [NaN, NaN, 'NaN == NaN'],
+                [0, -0, '0 == -0'],
+                [Infinity, Infinity, 'Infinity == Infinity'],
+                [new Date('2024-01-01'), new Date('2024-01-01'), 'Same dates'],
+                [new Date('2024-01-01'), new Date('2024-01-02'), 'Different dates']
+            ];
+
+            let html = '';
+            tests.forEach(([a, b, description]) => {
+                const result = check(a, b);
+                const resultClass = result ? 'success' : 'error';
+                html += `
+                    <div class="demo-result">
+                        <strong>${description}:</strong> <span class="${resultClass}">${result ? '✅ EQUAL' : '❌ NOT EQUAL'}</span><br>
+                        A: ${typeof a === 'object' && a !== null ? JSON.stringify(a) : String(a)}<br>
+                        B: ${typeof b === 'object' && b !== null ? JSON.stringify(b) : String(b)}
+                    </div>
+                `;
+            });
+
+            logToSection('check-output', html);
+        }
+
+        function demoEdgeCases() {
+            updateInfo('Q2: Edge Cases', 'Testing tricky comparison scenarios');
+            clearSection('check-output');
+
+            const tests = [
+                [{}, [], 'Empty object vs empty array'],
+                [[], {}, 'Empty array vs empty object'],
+                [{ length: 0 }, [], 'Object with length vs array'],
+                [true, 1, 'Boolean vs number'],
+                ['5', 5, 'String vs number'],
+                [{ a: undefined }, {}, 'Object with undefined vs missing property'],
+                [{ valueOf: () => 5 }, { valueOf: () => 5 }, 'Objects with methods'],
+                [new String('hello'), 'hello', 'String object vs primitive']
+            ];
+
+            let html = '';
+            tests.forEach(([a, b, description]) => {
+                const result = check(a, b);
+                const resultClass = result ? 'success' : 'warning';
+                html += `
+                    <div class="demo-result">
+                        <strong>${description}:</strong> <span class="${resultClass}">${result ? '✅ EQUAL' : '❌ NOT EQUAL'}</span><br>
+                        A: ${JSON.stringify(a)} (${typeof a})<br>
+                        B: ${JSON.stringify(b)} (${typeof b})
+                    </div>
+                `;
+            });
+
+            logToSection('check-output', html);
+        }
+
+        function demoArrayCheck() {
+            updateInfo('Q2: Array Comparison', 'Testing array equality with order sensitivity');
+            clearSection('check-output');
+
+            const tests = [
+                [[1, 2, 3], [1, 2, 3], 'Identical arrays'],
+                [[1, 2, 3], [3, 2, 1], 'Same elements, different order'],
+                [[{ a: 1 }], [{ a: 1 }], 'Arrays with objects'],
+                [[[1, 2]], [[1, 2]], 'Nested arrays'],
+                [[1, undefined], [1], 'Array with undefined vs shorter array'],
+                [[], [], 'Empty arrays']
+            ];
+
+            let html = '';
+            tests.forEach(([a, b, description]) => {
+                const result = check(a, b);
+                const resultClass = result ? 'success' : 'error';
+                html += `
+                    <div class="demo-result">
+                        <strong>${description}:</strong> <span class="${resultClass}">${result ? '✅ EQUAL' : '❌ NOT EQUAL'}</span><br>
+                        A: ${JSON.stringify(a)}<br>
+                        B: ${JSON.stringify(b)}
+                    </div>
+                `;
+            });
+
+            logToSection('check-output', html);
+        }
+
+        // Q3: Execute Function Demos (enhanced from original)
+        function universalExecute(code, variables = {}, sourceName = 'executed-snippet', description = 'Dynamic code execution') {
+            executionCounter++;
+            const executionId = `${sourceName}-${executionCounter}`;
+
+            updateInfo(`Q3: ${description}`, `Executing: ${executionId}`, code);
+
+            // Just execute and let errors bubble up naturally
+            execute(code, variables);
+            logToSection('execute-output', `<span class="success">✅ ${executionId} completed successfully</span>`);
+        }
+
+        function runSimpleCode() {
+            clearSection('execute-output');
+            universalExecute(`
+                $logger('Hello from dynamic execution!');
+                const message = 'Code executed at: ' + new Date().toLocaleTimeString();
+                $logger(message);
+                debugger; // Breakpoint for debugging
+            `, {}, 'simple', 'Basic dynamic code execution');
+        }
+
+        function runComplexCode() {
+            clearSection('execute-output');
+            universalExecute(`
+                const data = [
+                    { name: 'Task 1', priority: 'high', value: 10 },
+                    { name: 'Task 2', priority: 'low', value: 5 },
+                    { name: 'Task 3', priority: 'medium', value: 7 }
+                ];
+
+                $logger('Processing tasks...');
+                const processed = data.map(task => ({
+                    ...task,
+                    score: $math.mul(task.value, task.priority === 'high' ? 3 : task.priority === 'medium' ? 2 : 1)
+                }));
+
+                debugger; // Inspect processed data
+                $logger('Results:', processed);
+            `, {}, 'complex', 'Data processing with calculations');
+        }
+
+        function runMathDemo() {
+            clearSection('execute-output');
+            universalExecute(`
+                $logger('Math operations demo:');
+                const a = 15;
+                const b = 7;
+
+                $logger('Numbers:', a, 'and', b);
+                $logger('Sum:', $math.sum(a, b));
+                $logger('Product:', $math.mul(a, b));
+
+                const numbers = [1, 2, 3, 4, 5];
+                const doubled = numbers.map(n => $math.mul(n, 2));
+                $logger('Doubled array:', doubled);
+
+                debugger; // Inspect variables
+            `, {}, 'math', 'Mathematical operations showcase');
+        }
+
+        function runDebuggerDemo() {
+            clearSection('execute-output');
+            universalExecute(`
+                $logger('🐛 Debugger demo starting...');
+                debugger; // First breakpoint
+
+                let counter = 0;
+                for (let i = 0; i < 3; i++) {
+                    counter = $math.sum(counter, i);
+                    $logger('Iteration', i, 'counter:', counter);
+
+                    if (i === 1) {
+                        debugger; // Mid-loop breakpoint
+                    }
+                }
+
+                debugger; // Final breakpoint
+                $logger('Demo complete! Final counter:', counter);
+            `, {}, 'debugger', 'Multiple breakpoints demonstration');
+        }
+
+        function runErrorCode() {
+            clearSection('execute-output');
+            universalExecute(`
+                $logger('About to demonstrate error handling...');
+                const obj = { data: [1, 2, 3] };
+
+                // This will cause an error - let it bubble up naturally
+                $logger('Calling nonExistentMethod on obj...');
+                obj.nonExistentMethod();
+
+                $logger('This line will never execute');
+            `, {}, 'error', 'Error handling demonstration');
+        }
+
+        // Initialize
+        detectBrowser();
+        console.log('🚀 JS Exercise Interactive Demo Loaded!');
+        console.log('Features: Deep Copy, Object Comparison, Dynamic Execution');
+
+        // Initial test to show functions work
+        updateInfo('Welcome!', 'All functions loaded. Try the demos above.');
+        const testOriginal = { a: 1, b: { c: 2 } };
+        const testCopy = deepCopy(testOriginal);
+        console.log('✅ deepCopy test passed:', testOriginal !== testCopy && testOriginal.b !== testCopy.b);
+        console.log('✅ check test passed:', check({ a: 1 }, { a: 1 }) === true);
+        console.log('✅ execute function loaded and ready');
+    </script>
 </body>
 </html>
