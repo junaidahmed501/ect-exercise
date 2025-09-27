@@ -2,8 +2,10 @@
   "name": "js-exercise",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
   "scripts": {
+    "q1": "node q1_deepCopy.js",
+    "q2": "node q2_check.js",
+    "q3": "node q3_execute.js",
     "test": "jest"
   },
   "keywords": [],

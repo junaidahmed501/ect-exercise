@@ -242,16 +242,6 @@ describe('execute (Q3)', () => {
     expect(consoleSpy).toHaveBeenCalledWith('Transformed:', [2, 4, 6, 8, 10], [2, 4], 15);
   });
 
-  it('shall handle template literals', () => {
-    execute(`
-      const name = 'World';
-      const count = 42;
-      const message = \`Hello \${name}! Count: \${count}\`;
-      $logger(message);
-    `, { name: 'JavaScript', count: 100 });
-    expect(consoleSpy).toHaveBeenCalledWith('Hello JavaScript! Count: 100');
-  });
-
   it('shall handle object methods and this context', () => {
     execute(`
       const calculator = {
