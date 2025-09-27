@@ -1,14 +1,21 @@
 import {Component} from '@angular/core';
 import {DatePipe} from '@angular/common';
 import {CustomSortPipe} from '../pipes/custom-sort.pipe';
+import {RepeaterComponent} from './repeater/repeater.component';
+
+interface RepeaterData {
+  name: string;
+}
 
 @Component({
   selector: 'app-example',
   imports: [
     DatePipe,
     CustomSortPipe,
+    RepeaterComponent,
   ],
   template: `
+<!--    inline template for the sake of this exercise -->
     <h3>Simple sort by name (descending)</h3>
     @for (item of users | customSort: '-name'; track item.name) {
       <div>{{ item.name }} - {{ item.age }}</div>
@@ -28,6 +35,13 @@ import {CustomSortPipe} from '../pipes/custom-sort.pipe';
     @for (item of employees | customSort: 'department'; track item.name) {
       <div>{{ item.name }} - {{ item.department }}</div>
     }
+
+    <h3>Repeater Component Example</h3>
+    <repeater [option]="data">
+      <ng-template let-item>
+        <div>{{item.name}}</div>
+      </ng-template>
+    </repeater>
   `
 })
 export class ExampleUsageComponent {
@@ -55,4 +69,6 @@ export class ExampleUsageComponent {
     {name: 'Alice', department: 'Marketing'},
     {name: 'Bob', department: 'Engineering'}
   ];
+
+  data: RepeaterData[] = [{ name: 'A' }, { name: 'B' }, { name: 'C' }];
 }
