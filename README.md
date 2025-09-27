@@ -26,7 +26,7 @@ ect-exercise/
 
 ```bash
 # Navigate to project root
-cd /Users/junaid/Workspace/ect-exercise
+cd ect-exercise
 
 # Install Angular dependencies
 npm i
@@ -47,8 +47,8 @@ npm i
 ### Angular Application
 
 ```bash
-# From project root
-cd /Users/junaid/Workspace/ect-exercise
+# Navigate to project root
+cd ect-exercise
 ng serve
 
 # Application will be available at http://localhost:4200
@@ -71,8 +71,8 @@ and so on...
 ### Angular Tests
 
 ```bash
-# From project root
-cd /Users/junaid/Workspace/ect-exercise
+# Navigate to project root
+cd ect-exercise
 
 # Run all Angular tests
 npm test
