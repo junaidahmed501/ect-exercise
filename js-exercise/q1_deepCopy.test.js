@@ -1,6 +1,6 @@
 const { deepCopy } = require('./q1_deepCopy');
 
-describe('deepCopy', () => {
+describe('deepCopy Q(1)', () => {
   it('shall copy numbers correctly', () => {
     const num = 42;
     const cp = deepCopy(num);

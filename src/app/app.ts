@@ -6,7 +6,7 @@ import {ExampleUsageComponent} from './components/example-usage.component';
   selector: 'app-root',
   imports: [RouterOutlet, ExampleUsageComponent],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.scss'
 })
 export class App {
   protected readonly title = signal('ect-exercise');

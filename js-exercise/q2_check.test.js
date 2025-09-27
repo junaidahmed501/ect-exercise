@@ -100,7 +100,7 @@ describe('check (Q2)', () => {
     const b = { [s]: 1 };
     expect(check(a, b)).toBe(true); // symbol as key, return true
     const c = { [s]: 2 };
-    expect(check(a, c)).toBe(true); // symbol as key, return true
+    expect(check(a, c)).toBe(true);
   });
 
   it('objects with non-enumerable properties', () => {

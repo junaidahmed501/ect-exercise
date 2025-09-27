@@ -192,11 +192,10 @@ describe('CustomSortPipe', () => {
     it('should handle missing properties', () => {
       const data = [
         { name: 'John', age: 30 },
-        { name: 'Alice' }, // missing age
+        { name: 'Alice' },
         { name: 'Bob', age: 25 }
       ];
       const result = pipe.transform(data, 'age');
-      // undefined values come first
       expect(result[0].name).toBe('Alice');
       expect(result[1].age).toBe(25);
       expect(result[2].age).toBe(30);
@@ -209,7 +208,6 @@ describe('CustomSortPipe', () => {
         { nested: [[2, 1], [2]] }
       ];
       const result = pipe.transform(data, 'nested');
-      // Arrays compared element by element
       expect(result[0].nested).toEqual([[1, 2], [3]]);
       expect(result[1].nested).toEqual([[2, 1], [2]]);
       expect(result[2].nested).toEqual([[3, 2], [1]]);

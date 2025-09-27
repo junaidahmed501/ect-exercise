@@ -1,5 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
+/**
+ * CustomSortPipe sorts an array of objects based on one or more criteria.
+ * Assumptions:
+ * - Nested properties are not supported.
+ */
 @Pipe({
   name: 'customSort',
 })

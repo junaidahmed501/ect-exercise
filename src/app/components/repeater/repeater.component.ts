@@ -1,4 +1,4 @@
-import {Component, input, ContentChild, TemplateRef, InputSignal, contentChild, Signal} from '@angular/core';
+import {Component, input, TemplateRef, InputSignal, contentChild, Signal} from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 
 @Component({

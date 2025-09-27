@@ -91,7 +91,7 @@ function check(a, b) {
 }
 
 /**
- * Deliberately exposing only the 'check' function to contain the scope of the exercise sane :D
+ * Deliberately exposing only the 'check' function
  * Could write more tests but, SHOW ME THE MONEY :P
  */
 (function (root, factory) {

@@ -7,6 +7,9 @@ interface RepeaterData {
   name: string;
 }
 
+/**
+ * Intentionally kept this component simple and one file
+ */
 @Component({
   selector: 'app-example',
   imports: [
